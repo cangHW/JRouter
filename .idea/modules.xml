@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JRouter.iml" filepath="$PROJECT_DIR$/JRouter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRouter-Annotation/JRouter-Annotation.iml" filepath="$PROJECT_DIR$/JRouter-Annotation/JRouter-Annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRouter-Compiler/JRouter-Compiler.iml" filepath="$PROJECT_DIR$/JRouter-Compiler/JRouter-Compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRouterSever/JRouterSever.iml" filepath="$PROJECT_DIR$/JRouterSever/JRouterSever.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleA/ModuleA.iml" filepath="$PROJECT_DIR$/ModuleA/ModuleA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/ModuleLib.iml" filepath="$PROJECT_DIR$/ModuleLib/ModuleLib.iml" />
+      <module fileurl="file://E:\AndroidStudio\JRouter\JRouter-Annotation\Router-Annotation.iml" filepath="E:\AndroidStudio\JRouter\JRouter-Annotation\Router-Annotation.iml" />
+      <module fileurl="file://E:\AndroidStudio\JRouter\JRouter-Compiler\Router-Compiler.iml" filepath="E:\AndroidStudio\JRouter\JRouter-Compiler\Router-Compiler.iml" />
+      <module fileurl="file://E:\AndroidStudio\JRouter\Router-Compiler\Router-Processors.iml" filepath="E:\AndroidStudio\JRouter\Router-Compiler\Router-Processors.iml" />
+      <module fileurl="file://E:\AndroidStudio\JRouter\JRouterSever\RouterSever.iml" filepath="E:\AndroidStudio\JRouter\JRouterSever\RouterSever.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>
