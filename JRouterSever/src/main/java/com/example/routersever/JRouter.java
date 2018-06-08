@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.routersever.cache.context.IContextFactory.IContextFactory;
+import com.example.routersever.controller.context.IContextFactory.IContextFactory;
 import com.example.routersever.util.ExceptionUtil;
-import com.example.routersever.cache.context.ContextFactoryImpl;
+import com.example.routersever.controller.context.ContextFactoryImpl;
 
 /**
  * Created by Canghaixiao.

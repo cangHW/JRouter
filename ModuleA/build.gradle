@@ -13,7 +13,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ModuleName: "ModuleA"]
+                arguments = [ModuleName: "ModuleA", Autowired: "true"]
             }
         }
     }
@@ -24,7 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 
 
 }

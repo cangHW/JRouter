@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.routersever.constant.Constants;
+import com.example.routersever.controller.function.FunctionFactoryImpl;
 import com.example.routersever.sever.ISever.ISeverFunction;
 import com.example.routersever.util.ExceptionUtil;
 
@@ -15,8 +16,6 @@ import java.util.HashMap;
  * Function :自定义功能服务
  */
 class SeverFunctionImpl implements ISeverFunction {
-
-    private HashMap<String, Object> mSever = new HashMap<>();
 
     private SeverFunctionImpl() {
     }
@@ -31,29 +30,16 @@ class SeverFunctionImpl implements ISeverFunction {
 
     @Override
     public void RegisterFunction(@NonNull Class<?> c, @NonNull Object o) {
-        if (mSever.containsKey(c.getName())) {
-            ExceptionUtil.Runtime("the " + c.getName() + " is Registered");
-            return;
-        }
-        mSever.put(c.getName(), o);
+        FunctionFactoryImpl.getInstance().getFunction().RegisterFunction(c, o);
     }
 
     @Override
     public void unRegisterFunction(@NonNull Class<?> c) {
-        if (mSever.containsKey(c.getName())) {
-            mSever.remove(c.getName());
-        } else {
-            ExceptionUtil.Runtime("first you need to register " + c.getName());
-        }
+        FunctionFactoryImpl.getInstance().getFunction().unRegisterFunction(c);
     }
 
     @Override
     public <T> T getFunction(Class<T> c) {
-        if (mSever.containsKey(c.getName())) {
-            Object o = mSever.get(c.getName());
-            return c.cast(o);
-        }
-        Log.d(Constants.TAG, "first you need to register " + c.getName());
-        return null;
+        return FunctionFactoryImpl.getInstance().getFunction().getFunction(c);
     }
 }

@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.routersever.cache.ui.UiFactoryImpl;
+import com.example.routersever.controller.ui.UiFactoryImpl;
 import com.example.routersever.constant.Constants;
 import com.example.routersever.dispatcher.intent.IDispacher.IDispacherIntent;
 import com.example.routersever.message.RouterOpenRequst;
