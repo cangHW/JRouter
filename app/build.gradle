@@ -12,7 +12,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ModuleName: "App", Autowired: "false"]
+                arguments = [ModuleName: "App", Autowired: "true"]
             }
         }
     }

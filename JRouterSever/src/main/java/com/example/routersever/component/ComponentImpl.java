@@ -18,7 +18,7 @@ import java.util.HashMap;
 class ComponentImpl implements IComponent {
 
     private IContextFactory mFactory;
-    private HashMap<String, IApplicationRouter> mComponents = new HashMap<>();
+    private HashMap<String, IApplicationRouter> mComponentsWapper = new HashMap<>();
 
     private ComponentImpl() {
         mFactory = new ContextFactoryImpl();
@@ -34,14 +34,14 @@ class ComponentImpl implements IComponent {
 
     @Override
     public void RegisterComponent(@NonNull String componentName) {
-        if (mComponents.containsKey(componentName)) {
+        if (mComponentsWapper.containsKey(componentName)) {
             ExceptionUtil.Runtime("the " + componentName + " is Registered");
         }
         try {
             Class aClass = Class.forName(componentName);
             IApplicationRouter iApplication = (IApplicationRouter) aClass.newInstance();
             iApplication.onCreate(mFactory.getContextCache().get());
-            mComponents.put(componentName, iApplication);
+            mComponentsWapper.put(componentName, iApplication);
             return;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -55,10 +55,10 @@ class ComponentImpl implements IComponent {
 
     @Override
     public void unRegisterComponent(@NonNull String componentName) {
-        if (mComponents.containsKey(componentName)) {
-            IApplicationRouter iApplication = mComponents.get(componentName);
+        if (mComponentsWapper.containsKey(componentName)) {
+            IApplicationRouter iApplication = mComponentsWapper.get(componentName);
             iApplication.onDestory();
-            mComponents.remove(componentName);
+            mComponentsWapper.remove(componentName);
         } else {
             ExceptionUtil.Runtime("first you need to register " + componentName);
         }

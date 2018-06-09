@@ -12,5 +12,5 @@ import android.support.v4.app.FragmentActivity;
  */
 public interface IAutowired {
 
-    void autowired(Object o);
+    void autowired(String packageName,String className,Object o);
 }

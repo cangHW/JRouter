@@ -1,7 +1,5 @@
 package com.example.routersever.controller.adress;
 
-import android.support.annotation.NonNull;
-
 import com.example.routersever.controller.adress.IAdress.IAdress;
 import com.jrouter.util.ClassPathUtils;
 
@@ -32,7 +30,7 @@ class AdressImpl implements IAdress {
     @Override
     public String getIp(String moduleName, String className) {
         if (!mModule_IpWapper.containsKey(moduleName)) {
-            fetch(moduleName);
+            createWapper(moduleName);
         }
         HashMap<String, String> ips = mModule_IpWapper.get(moduleName);
         return ips.get(className);
@@ -41,7 +39,7 @@ class AdressImpl implements IAdress {
     @Override
     public String getIp(String moduleName, String className, String packageName) {
         if (!mModule_IpWapper.containsKey(moduleName)) {
-            fetch(moduleName);
+            createWapper(moduleName);
         }
         String realName = mPackage_ClassNameWapper.get(packageName + "." + className);
         if (realName != null) {
@@ -51,7 +49,7 @@ class AdressImpl implements IAdress {
         return null;
     }
 
-    private void fetch(String moduleName) {
+    private void createWapper(String moduleName) {
         try {
             HashMap<String, String> ids = new HashMap<>();
             String adress = ClassPathUtils.generateAdressPath(moduleName);

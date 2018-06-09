@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 class FunctionImpl implements IFunction {
 
-    private HashMap<String, Object> mSever = new HashMap<>();
+    private HashMap<String, Object> mSeverWapper = new HashMap<>();
 
     private FunctionImpl() {
     }
@@ -31,17 +31,17 @@ class FunctionImpl implements IFunction {
 
     @Override
     public void RegisterFunction(@NonNull Class<?> c, @NonNull Object o) {
-        if (mSever.containsKey(c.getName())) {
+        if (mSeverWapper.containsKey(c.getName())) {
             ExceptionUtil.Runtime("the " + c.getName() + " is Registered");
             return;
         }
-        mSever.put(c.getName(), o);
+        mSeverWapper.put(c.getName(), o);
     }
 
     @Override
     public void unRegisterFunction(@NonNull Class<?> c) {
-        if (mSever.containsKey(c.getName())) {
-            mSever.remove(c.getName());
+        if (mSeverWapper.containsKey(c.getName())) {
+            mSeverWapper.remove(c.getName());
         } else {
             ExceptionUtil.Runtime("first you need to register " + c.getName());
         }
@@ -49,8 +49,8 @@ class FunctionImpl implements IFunction {
 
     @Override
     public <T> T getFunction(Class<T> c) {
-        if (mSever.containsKey(c.getName())) {
-            Object o = mSever.get(c.getName());
+        if (mSeverWapper.containsKey(c.getName())) {
+            Object o = mSeverWapper.get(c.getName());
             return c.cast(o);
         }
         Log.d(Constants.TAG, "first you need to register " + c.getName());

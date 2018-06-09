@@ -26,7 +26,7 @@ import java.util.List;
  */
 class UiOpenImpl implements IUiOpen {
 
-    private HashMap<String, SoftReference<IUiCache>> mUiCache = new HashMap<>();
+    private HashMap<String, SoftReference<IUiCache>> mUiWapper = new HashMap<>();
 
     private UiOpenImpl() {
     }
@@ -102,9 +102,9 @@ class UiOpenImpl implements IUiOpen {
 
     private IUiCache fetchIUiCache(String host) {
         if (!isHasCache(host)) {
-            createCache(host);
+            createWapper(host);
         }
-        SoftReference<IUiCache> softReference = mUiCache.get(host);
+        SoftReference<IUiCache> softReference = mUiWapper.get(host);
         if (softReference == null) {
             softReference = replaceUiCache(host);
         }
@@ -116,21 +116,21 @@ class UiOpenImpl implements IUiOpen {
     }
 
     private boolean isHasCache(String host) {
-        return mUiCache.containsKey(host);
+        return mUiWapper.containsKey(host);
     }
 
     private SoftReference<IUiCache> replaceUiCache(String host) {
-        mUiCache.remove(host);
-        createCache(host);
-        return mUiCache.get(host);
+        mUiWapper.remove(host);
+        createWapper(host);
+        return mUiWapper.get(host);
     }
 
-    private void createCache(String host) {
+    private void createWapper(String host) {
         String path = ClassPathUtils.generateUiPath(host);
         try {
             Class aClass = Class.forName(path);
             IUiCache uiCache = (IUiCache) aClass.newInstance();
-            mUiCache.put(host, new SoftReference<>(uiCache));
+            mUiWapper.put(host, new SoftReference<>(uiCache));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

@@ -26,7 +26,7 @@ public class ClassPathUtils {
         return UI + moduleName + JROUTER_CLASS_NAME_END;
     }
 
-    public static String generateAutowiredPath() {
+    public static String generateAutowiredPackageName() {
         return AUTOWIRED;
     }
 

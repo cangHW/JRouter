@@ -12,8 +12,9 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class AutowiredProcessors extends AbstractProcessor {
     private Elements mElements;
     private Filer mFiler;
     private String mAutowired;
-    private ArrayList<ParamsNodeMessage> mParamsList;
+    private HashMap<String,ArrayList<ParamsNodeMessage>> mParamsMap;
     private JLogger mJLogger;
 
     @Override
@@ -54,7 +55,7 @@ public class AutowiredProcessors extends AbstractProcessor {
         mElements = processingEnvironment.getElementUtils();
         mFiler = processingEnvironment.getFiler();
         mJLogger = new JLogger(processingEnvironment.getMessager());
-        mParamsList = new ArrayList<>();
+        mParamsMap=new HashMap<>();
         Map<String, String> stringMap = processingEnvironment.getOptions();
         if (stringMap != null && !stringMap.isEmpty()) {
             mAutowired = stringMap.get(Constants.AUTOWIRED);
@@ -98,7 +99,13 @@ public class AutowiredProcessors extends AbstractProcessor {
             message.className = parentElement.getSimpleName().toString();
             message.packageName = parentElement.getQualifiedName().toString().substring(0, parentElement.getQualifiedName().toString().lastIndexOf("."));
 
-            mParamsList.add(message);
+            if (mParamsMap.containsKey(message.packageName+message.className)){
+                mParamsMap.get(message.packageName+message.className).add(message);
+            }else {
+                ArrayList<ParamsNodeMessage> list=new ArrayList<>();
+                list.add(message);
+                mParamsMap.put(message.packageName+message.className,list);
+            }
         }
     }
 
@@ -106,8 +113,15 @@ public class AutowiredProcessors extends AbstractProcessor {
      * create autowiredImpl
      */
     private void generateAutowiredImpl() throws IOException {
-        String packageName = ClassPathUtils.generateAutowiredPath();
-        TypeSpec.Builder builder = TypeSpec.classBuilder(ClassPathUtils.generateAutowiredClassName(mParamsList.get(0).packageName, mParamsList.get(0).className))
+        Collection<ArrayList<ParamsNodeMessage>> collection=mParamsMap.values();
+        for (ArrayList<ParamsNodeMessage> arrayList:collection){
+            createJavaFile(arrayList);
+        }
+    }
+
+    private void createJavaFile(ArrayList<ParamsNodeMessage> list) throws IOException {
+        String packageName = ClassPathUtils.generateAutowiredPackageName();
+        TypeSpec.Builder builder = TypeSpec.classBuilder(ClassPathUtils.generateAutowiredClassName(list.get(0).packageName, list.get(0).className))
                 .addSuperinterface(ClassName.get(mElements.getTypeElement(Constants.AUTOWIRED_SUPPERINTERFACE)))
                 .addModifiers(Modifier.PUBLIC);
 
@@ -116,11 +130,11 @@ public class AutowiredProcessors extends AbstractProcessor {
                 .addParameter(Object.class, Constants.PARAMETER_OBJECT)
                 .addAnnotation(Override.class)
                 .addStatement("$T $L = ($T) " + Constants.PARAMETER_OBJECT,
-                        ClassName.get((TypeElement) mParamsList.get(0).parentElement),
-                        mParamsList.get(0).className,
-                        ClassName.get((TypeElement) mParamsList.get(0).parentElement));
+                        ClassName.get((TypeElement) list.get(0).parentElement),
+                        list.get(0).className,
+                        ClassName.get((TypeElement) list.get(0).parentElement));
 
-        for (ParamsNodeMessage message : mParamsList) {
+        for (ParamsNodeMessage message : list) {
             addCode(methodBuilder, message);
         }
 

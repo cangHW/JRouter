@@ -19,4 +19,10 @@ public class ParamsNodeMessage {
 
     public String packageName;
     public String className;
+
+
+    @Override
+    public String toString() {
+        return packageName+"  "+className+"  "+name;
+    }
 }

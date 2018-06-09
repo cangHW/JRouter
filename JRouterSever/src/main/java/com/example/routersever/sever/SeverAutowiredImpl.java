@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.example.routersever.controller.autowired.AutowiredFactoryImpl;
 import com.example.routersever.sever.ISever.ISeverAutowired;
-import com.example.routersever.sever.ISever.ISeverUi;
 
 /**
  * Created by Canghaixiao.
@@ -29,22 +28,22 @@ public class SeverAutowiredImpl implements ISeverAutowired{
 
     @Override
     public void autowired(@NonNull Activity activity) {
-        AutowiredFactoryImpl.getFactory().getAutowired().autowired(activity);
+        AutowiredFactoryImpl.getFactory().getAutowired().autowired(activity.getClass().getPackage().getName(),activity.getClass().getSimpleName(),activity);
     }
 
     @Override
     public void autowired(@NonNull Fragment fragment) {
-        AutowiredFactoryImpl.getFactory().getAutowired().autowired(fragment);
+        AutowiredFactoryImpl.getFactory().getAutowired().autowired(fragment.getClass().getPackage().getName(),fragment.getClass().getSimpleName(),fragment);
     }
 
     @Override
     public void autowired(@NonNull FragmentActivity activity) {
-        AutowiredFactoryImpl.getFactory().getAutowired().autowired(activity);
+        AutowiredFactoryImpl.getFactory().getAutowired().autowired(activity.getClass().getPackage().getName(),activity.getClass().getSimpleName(),activity);
     }
 
     @Override
     public void autowired(@NonNull android.support.v4.app.Fragment fragment) {
-        AutowiredFactoryImpl.getFactory().getAutowired().autowired(fragment);
+        AutowiredFactoryImpl.getFactory().getAutowired().autowired(fragment.getClass().getPackage().getName(),fragment.getClass().getSimpleName(),fragment);
     }
 
 }

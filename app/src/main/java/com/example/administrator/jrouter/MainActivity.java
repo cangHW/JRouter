@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     @ParamsNode()
-    String name;
+    public String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(this,data,Toast.LENGTH_SHORT).show();
 //        JRouterSever.getInstance().getUIs().openUI(this,"JRouter://ModuleA/a/a");
 //        JRouterAdress_ModuleA
-        String ip= JRouterSever.getFactory().getIps().getIp("ModuleA","A_Activity","com.example.modulea");
+//        String ip= JRouterSever.getFactory().getIps().getIp("ModuleA","A_Activity","com.example.modulea");
+        String ip=JRouterSever.getFactory().getIps().getIp("App","TestActivity");
 //        JRouterSever.getFactory().getUIs().openUI(this,ip);
-        JRouterSever.getFactory().getUIs().openUI(this,ip,new String[]{"name","asd"});
+        JRouterSever.getFactory().getUIs().openUI(this,ip,new String[]{"nnn","asd"});
     }
 }
