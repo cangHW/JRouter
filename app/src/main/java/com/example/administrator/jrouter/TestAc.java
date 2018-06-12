@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.jrouter.annotation.ParamsNode;
 import com.jrouter.annotation.RouterNode;
 
 /**
@@ -16,7 +15,7 @@ import com.jrouter.annotation.RouterNode;
 @RouterNode(path = "asd",group = "app")
 public class TestAc extends Activity {
 
-//    @ParamsNode()
+//    @AutowiredNode()
 //    String xxx;
 
     @Override

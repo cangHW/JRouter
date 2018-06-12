@@ -1,11 +1,12 @@
 package com.jrouter.processors;
 
 import com.google.auto.service.AutoService;
-import com.jrouter.annotation.ParamsNode;
+import com.jrouter.annotation.AutowiredNode;
 import com.jrouter.annotation.RouterNode;
 import com.jrouter.node.RouterNodeMessage;
 import com.jrouter.constants.Constants;
 import com.jrouter.util.ClassPathUtils;
+import com.jrouter.util.FileUtil;
 import com.jrouter.util.JLogger;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -83,6 +84,7 @@ public class RouterProcessors extends AbstractProcessor {
                     parseNodes(elements);
                     generateRouterAdressImpl();
                     generateRouterUiImpl();
+                    generateRouterTable();
                 } catch (IOException e) {
                     mJLogger.error(e);
                 }
@@ -117,29 +119,31 @@ public class RouterProcessors extends AbstractProcessor {
     private void installParamsMessage(TypeElement typeElement, RouterNodeMessage node) {
         List<? extends Element> elements = typeElement.getEnclosedElements();
         for (Element element : elements) {
-            if (element.getKind().isField() && element.getAnnotation(ParamsNode.class) != null) {
-                ParamsNode paramsNode = element.getAnnotation(ParamsNode.class);
-                if (node.params_key == null) {
-                    node.params_key = new ArrayList<>();
+            if (element.getKind().isField() && element.getAnnotation(AutowiredNode.class) != null) {
+                AutowiredNode autowiredNode = element.getAnnotation(AutowiredNode.class);
+//                if (!autowiredNode.isView()) {
+                    if (node.params_key == null) {
+                        node.params_key = new ArrayList<>();
+                    }
+                    if (!"".equals(autowiredNode.key())) {
+                        node.params_key.add(autowiredNode.key());
+                    } else {
+                        node.params_key.add(element.getSimpleName().toString());
+                    }
+                    if (node.params_canEmpty == null) {
+                        node.params_canEmpty = new ArrayList<>();
+                    }
+                    node.params_canEmpty.add(autowiredNode.canEmpty());
+                    if (node.params_type == null) {
+                        node.params_type = new ArrayList<>();
+                    }
+                    node.params_type.add(element.asType().toString());
+                    if (node.params_desc == null) {
+                        node.params_desc = new ArrayList<>();
+                    }
+                    node.params_desc.add(autowiredNode.desc());
                 }
-                if (!"".equals(paramsNode.key())) {
-                    node.params_key.add(paramsNode.key());
-                } else {
-                    node.params_key.add(element.getSimpleName().toString());
-                }
-                if (node.params_canEmpty == null) {
-                    node.params_canEmpty = new ArrayList<>();
-                }
-                node.params_canEmpty.add(paramsNode.canEmpty());
-                if (node.params_type == null) {
-                    node.params_type = new ArrayList<>();
-                }
-                node.params_type.add(element.asType().toString());
-                if (node.params_desc == null) {
-                    node.params_desc = new ArrayList<>();
-                }
-                node.params_desc.add(paramsNode.desc());
-            }
+//            }
         }
     }
 
@@ -344,5 +348,42 @@ public class RouterProcessors extends AbstractProcessor {
 
     private String generateRouterIp(RouterNodeMessage node) {
         return "JRouter://" + mModuleName + "/" + node.group + node.path;
+    }
+
+    private void generateRouterTable() {
+        String fileName = ClassPathUtils.genRouterTable(mModuleName);
+        if (FileUtil.createFile(fileName)) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("  JRouterTable\n\n");
+            stringBuilder.append("  ModuleName : ").append(mModuleName).append("\n\n");
+
+            Collection<ArrayList<RouterNodeMessage>> nodes = mNodeMap.values();
+            for (ArrayList<RouterNodeMessage> nodeArrayList : nodes) {
+                for (RouterNodeMessage node : nodeArrayList) {
+                    if (node.desc!=null&&!"".equals(node.desc)) {
+                        stringBuilder.append("  Desc : ").append(node.desc).append("\n");
+                    }
+                    stringBuilder.append("  PackageName : ").append(node.packageName).append("\n");
+                    stringBuilder.append("  ClassName : ").append(node.className).append("\n");
+                    stringBuilder.append("  Group : ").append(node.group).append("\n");
+                    stringBuilder.append("  Path : ").append(node.path).append("\n");
+                    ArrayList<String>  paramsDesc = node.params_desc;
+                    ArrayList<String>  paramsType = node.params_type;
+                    ArrayList<String>  paramsKey = node.params_key;
+                    if (paramsDesc!=null&&!paramsDesc.isEmpty()) {
+                        stringBuilder.append("  Params : ").append("\n");
+                        for (int i = 0; i < paramsDesc.size(); i++) {
+                            stringBuilder.append("    ").append(paramsType.get(i)).append(" : ").append(paramsKey.get(i));
+                            if (paramsDesc.get(i)!=null&&!"".equals(paramsDesc.get(i))){
+                                stringBuilder.append("   \\\\").append(paramsDesc.get(i));
+                            }
+                            stringBuilder.append("\n");
+                        }
+                    }
+                    stringBuilder.append("\n");
+                }
+            }
+            FileUtil.writeStringToFile(fileName, stringBuilder.toString());
+        }
     }
 }

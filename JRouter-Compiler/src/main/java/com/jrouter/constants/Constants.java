@@ -14,16 +14,13 @@ public interface Constants {
     ////////////Annotation  start////////////////////////////////
     String PACKAGE = "com.jrouter.annotation";
     String ANNOTATION_ROUTER_NODE = PACKAGE + ".RouterNode";
-    String ANNOTATION_PARAMS_NODE = PACKAGE + ".ParamsNode";
+    String ANNOTATION_PARAMS_NODE = PACKAGE + ".AutowiredNode";
     ////////////Annotation  end////////////////////////////////
 
-    ////////////supperclass  start////////////////////////////////
+    ////////////supper  start////////////////////////////////
     String UI_SUPPERCLASS = "com.example.routersever.controller.ui.Abstract.AbstractUiCache";
-    ////////////supperclass  end////////////////////////////////
-
-    ////////////supperinterface  start////////////////////////////////
     String AUTOWIRED_SUPPERINTERFACE = "com.example.routersever.controller.autowired.IAutowired.IInject";
-    ////////////supperinterface  end////////////////////////////////
+    ////////////supper  end////////////////////////////////
 
     ////////////class filed start////////////////////////////////
     String METHOD_CM = "createMapper";
@@ -32,8 +29,9 @@ public interface Constants {
     String FIELD_MAPPER_PARAMS_TYPE = "mParams_Key_Type_Mapper";
     String FIELD_MAPPER_PARAMS_CANEMPTY = "mParams_Key_CanEmpty_Mapper";
 
-    String METHOD_AUTOWIRED="inject";
+    String METHOD_AUTOWIRED = "inject";
     String PARAMETER_OBJECT = "o";
+    String METHOD_GETVIEW = "getView";
     ////////////class filed end////////////////////////////////
 
     ////////////Class Type start///////////////////////////////

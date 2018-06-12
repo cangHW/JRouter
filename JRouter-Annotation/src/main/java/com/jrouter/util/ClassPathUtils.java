@@ -8,11 +8,13 @@ package com.jrouter.util;
 public class ClassPathUtils {
 
     private static final String PACKAGER_START = "com.jrouter.lib.";
+    private static final String PACKAGE_TABLE = "./JRouterTable/";
 
     private static final String ADRESS = PACKAGER_START + "Adress_";
     private static final String UI = PACKAGER_START + "Ui_";
     private static final String AUTOWIRED = PACKAGER_START + "autowired";
 
+    private static final String JROUTER_TABLE_END = "$$TABLE";
     private static final String JROUTER_CLASS_NAME_END = "$$JROUTER";
     private static final String AUTOWIRED_CLASS_NAME_END = "$$AUTOWIRED";
 
@@ -33,6 +35,10 @@ public class ClassPathUtils {
     public static String generateAutowiredClassName(String packageName, String className) {
         packageName = packageName.replaceAll("\\.", "_");
         return packageName + "_" + className + AUTOWIRED_CLASS_NAME_END;
+    }
+
+    public static String genRouterTable(String moduleName) {
+        return PACKAGE_TABLE + moduleName + JROUTER_CLASS_NAME_END + ".txt";
     }
 
     public static String getFieldAdressPackageEnd() {

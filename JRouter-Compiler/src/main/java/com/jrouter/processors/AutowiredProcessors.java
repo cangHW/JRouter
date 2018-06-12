@@ -1,7 +1,7 @@
 package com.jrouter.processors;
 
 import com.google.auto.service.AutoService;
-import com.jrouter.annotation.ParamsNode;
+import com.jrouter.annotation.AutowiredNode;
 import com.jrouter.constants.Constants;
 import com.jrouter.node.ParamsNodeMessage;
 import com.jrouter.util.ClassPathUtils;
@@ -9,6 +9,7 @@ import com.jrouter.util.JLogger;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.swing.text.View;
 
 /**
  * Created by Canghaixiao.
@@ -68,7 +70,7 @@ public class AutowiredProcessors extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         if (set != null && !set.isEmpty()) {
-            Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(ParamsNode.class);
+            Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(AutowiredNode.class);
             if (elements != null && !elements.isEmpty()) {
                 if ("true".equals(mAutowired)) {
                     try {
@@ -87,12 +89,14 @@ public class AutowiredProcessors extends AbstractProcessor {
     private void parseNode(Set<? extends Element> elements) {
         for (Element element : elements) {
             TypeElement parentElement = (TypeElement) element.getEnclosingElement();
-            ParamsNode paramsNode = element.getAnnotation(ParamsNode.class);
+            AutowiredNode autowiredNode = element.getAnnotation(AutowiredNode.class);
             ParamsNodeMessage message = new ParamsNodeMessage();
-            message.key = paramsNode.key().equals("") ? element.getSimpleName().toString() : paramsNode.key();
+            message.key = autowiredNode.key().equals("") ? element.getSimpleName().toString() : autowiredNode.key();
             message.name = element.getSimpleName().toString();
-            message.desc = paramsNode.desc();
-            message.isCanEmpty = paramsNode.canEmpty();
+//            message.isView=autowiredNode.isView();
+//            message.viewId=autowiredNode.viewId();
+            message.desc = autowiredNode.desc();
+            message.isCanEmpty = autowiredNode.canEmpty();
             message.parentElement = parentElement;
             message.element = element;
             message.type = element.asType().toString();
@@ -134,19 +138,39 @@ public class AutowiredProcessors extends AbstractProcessor {
                         list.get(0).className,
                         ClassName.get((TypeElement) list.get(0).parentElement));
 
+//        MethodSpec.Builder viewMethodBuilder=MethodSpec.methodBuilder(Constants.METHOD_GETVIEW)
+//                .addModifiers(Modifier.PUBLIC)
+//                .returns(View.class)
+//                .addParameter(ClassName.get((TypeElement) list.get(0).parentElement),"o")
+//                .addParameter(Integer.class,"id");
+
         for (ParamsNodeMessage message : list) {
-            addCode(methodBuilder, message);
+            if (message.isView){
+                addCodeForView(methodBuilder,message);
+            }else {
+                addCode(methodBuilder, message);
+            }
         }
 
         builder.addMethod(methodBuilder.build());
+//        builder.addMethod(viewMethodBuilder.build());
         TypeSpec typeSpec = builder.build();
         JavaFile.builder(packageName, typeSpec).build().writeTo(mFiler);
+    }
+
+    private void addCodeForView(MethodSpec.Builder builder, ParamsNodeMessage message){
+        builder.addStatement("$S.$S=($T)getView($L,$L)"
+                ,message.className
+                ,message.name
+                ,ClassName.get(mElements.getTypeElement(message.type))
+                ,message.className
+                ,message.viewId);
     }
 
     private void addCode(MethodSpec.Builder builder, ParamsNodeMessage message) {
         switch (message.type) {
             case Constants.TYPE_BOOLEAN:
-                builder.addStatement("$S.$S=getIntent().getBooleanExtra($S)", message.className, message.name, message.key);
+                builder.addStatement("$L.$L=$L.getIntent().getBooleanExtra($S)", message.className, message.name, message.className, message.key);
                 break;
             case Constants.TYPE_BYTE:
                 builder.addStatement("$L.$L=$L.getIntent().getByteExtra($S)", message.className, message.name, message.className, message.key);

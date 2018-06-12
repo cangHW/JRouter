@@ -12,11 +12,15 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
-public @interface ParamsNode {
+public @interface AutowiredNode {
 
     String key() default "";
 
     boolean canEmpty() default false;
+
+//    int viewId() default 0;
+//
+//    boolean isView() default false;
 
     String desc() default "";
 

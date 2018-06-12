@@ -17,12 +17,15 @@ public class ParamsNodeMessage {
     public String name;
     public String type;
 
+    public boolean isView = false;
+    public int viewId;
+
     public String packageName;
     public String className;
 
 
     @Override
     public String toString() {
-        return packageName+"  "+className+"  "+name;
+        return packageName + "  " + className + "  " + name;
     }
 }

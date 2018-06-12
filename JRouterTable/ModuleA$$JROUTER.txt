@@ -1,0 +1,12 @@
+          JRouterTable
+
+  ModuleName : ModuleA
+
+  Desc : asd
+  PackageName : com.example.modulea.A_Activity
+  ClassName : A_Activity
+  Group : a
+  Path : /a
+  Params : 
+    java.lang.String : name
+

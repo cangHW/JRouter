@@ -1,0 +1,24 @@
+          JRouterTable
+
+  ModuleName : App
+
+  PackageName : com.example.administrator.jrouter.MainActivity
+  ClassName : MainActivity
+  Group : app
+  Path : /asd
+  Params : 
+    java.lang.String : name
+    android.widget.TextView : tv
+
+  PackageName : com.example.administrator.jrouter.TestAc
+  ClassName : TestAc
+  Group : app
+  Path : /asd1
+
+  PackageName : com.example.administrator.jrouter.TestActivity
+  ClassName : TestActivity
+  Group : app
+  Path : /asd2
+  Params : 
+    java.lang.String : name
+

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.routersever.sever.JRouterSever;
-import com.jrouter.annotation.ParamsNode;
+import com.jrouter.annotation.AutowiredNode;
 import com.jrouter.annotation.RouterNode;
 
 /**
@@ -18,7 +18,7 @@ import com.jrouter.annotation.RouterNode;
 @RouterNode(path = "asd",group = "app")
 public class TestActivity extends Activity {
 
-    @ParamsNode(key = "name")
+    @AutowiredNode(key = "name")
     public String nnnn;
 
     @Override

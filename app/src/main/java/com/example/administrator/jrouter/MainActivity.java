@@ -1,12 +1,13 @@
 package com.example.administrator.jrouter;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import com.example.routersever.controller.adress.AdressFactoryImpl;
 import com.example.routersever.sever.JRouterSever;
-import com.jrouter.annotation.ParamsNode;
+import com.jrouter.annotation.AutowiredNode;
 import com.jrouter.annotation.RouterNode;
 
 import java.util.ArrayList;
@@ -15,8 +16,11 @@ import java.util.HashMap;
 @RouterNode(path = "/asd",group = "app")
 public class MainActivity extends AppCompatActivity {
 
-    @ParamsNode()
+    @AutowiredNode()
     public String name;
+
+    @AutowiredNode()
+    public TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         new ArrayList<String>(){
             {add("asd");}            {add("asd");}            {add("asd");}            {add("asd");}            {add("asd");}
         };
+//        findViewById()
     }
 
     public void Click(View view){
