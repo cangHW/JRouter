@@ -6,9 +6,15 @@ package com.example.administrator.jrouter;
 
 public class Bean {
 
-    String name="asd";
-    int old=6;
-    int sex=1;
+    String name;
+    int old;
+    int sex;
+
+    public Bean(String name,int old,int sex){
+        this.name=name;
+        this.old=old;
+        this.sex=sex;
+    }
 
     @Override
     public String toString() {
