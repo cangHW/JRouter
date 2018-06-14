@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="xxx"
         android:gravity="center"
-        android:textSize="30sp"/>
+        android:textSize="20sp"
+        android:text="hi，我没有参数,并且我的IP地址和有参数那家伙一样"/>
 
 </LinearLayout>

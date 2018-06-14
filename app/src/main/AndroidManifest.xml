@@ -18,14 +18,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity"
+        <activity android:name=".AidlActivity"
             android:process=":test">
 
         </activity>
-
-        <activity android:name=".TestAc">
-
-        </activity>
+        <activity android:name=".ServiceActivity"/>
     </application>
 
 </manifest>

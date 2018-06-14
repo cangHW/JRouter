@@ -183,48 +183,11 @@ class UiOpenImpl implements IUiOpen {
     }
 
     private boolean checkParamsWithBundle(ParameterMessage parameterMessage, Bundle bundle, RouterOpenResponse response) {
-        boolean isRight = true;
-        switch (parameterMessage.getType()) {
-//            case Constants.BOOLEAN:
-//                bundle.getBoolean(parameterMessage.getName());
-//                break;
-//            case Constants.BYTE:
-//                bundle.getByte(parameterMessage.getName());
-//                break;
-//            case Constants.DOUBEL:
-//                bundle.getDouble(parameterMessage.getName());
-//                break;
-//            case Constants.FLOAT:
-//                bundle.getFloat(parameterMessage.getName());
-//                break;
-//            case Constants.INTEGER:
-//                bundle.getInt(parameterMessage.getName());
-//                break;
-//            case Constants.LONG:
-//                bundle.getLong(parameterMessage.getName());
-//                break;
-            case Constants.PARCELABLE:
-                Parcelable parcelable = bundle.getParcelable(parameterMessage.getKey());
-                if (parcelable == null) {
-                    isRight = false;
-                }
-                break;
-            case Constants.SERIALIZABLE:
-                Serializable serializable = bundle.getSerializable(parameterMessage.getKey());
-                if (serializable == null) {
-                    isRight = false;
-                }
-                break;
-//            case Constants.SHORT:
-//                bundle.getLong(parameterMessage.getName());
-//                break;
-            case Constants.STRING:
-                String string = bundle.getString(parameterMessage.getKey());
-                if (string == null) {
-                    isRight = false;
-                }
-                break;
+        boolean flag = bundle.containsKey(parameterMessage.getKey());
+        if (!flag && !parameterMessage.isCanEmpty()) {
+            response.setErrorMsg("The params can not empty.PARAMS KEY: " + parameterMessage.getKey());
+            return false;
         }
-        return isRight;
+        return true;
     }
 }

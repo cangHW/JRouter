@@ -18,6 +18,5 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         JRouter.init(this);
-        JRouterComponent.getFactory().getComponents().RegisterComponent("com.example.modulea.A_AppLication");
     }
 }

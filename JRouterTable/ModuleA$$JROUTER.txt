@@ -2,11 +2,17 @@
 
   ModuleName : ModuleA
 
-  Desc : asd
-  PackageName : com.example.modulea.A_Activity
-  ClassName : A_Activity
+  Desc : 有参数
+  PackageName : com.example.modulea.Has_Params_Activity
+  ClassName : Has_Params_Activity
   Group : a
   Path : /a
   Params : 
     java.lang.String : name
+
+  Desc : 无参数
+  PackageName : com.example.modulea.NoParamsActivity
+  ClassName : NoParamsActivity
+  Group : a
+  Path : /a1
 

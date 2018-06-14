@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="hi，我有参数,并且我的IP地址和无参数那家伙一样,点击我返回"
+        android:gravity="center"
+        android:clickable="true"
+        android:onClick="Click"
+        android:textSize="30sp"/>
+
+</LinearLayout>

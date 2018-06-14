@@ -3,7 +3,8 @@
 
     <application>
 
-        <activity android:name=".A_Activity"/>
+        <activity android:name=".Has_Params_Activity"/>
+        <activity android:name=".NoParamsActivity"/>
 
     </application>
 

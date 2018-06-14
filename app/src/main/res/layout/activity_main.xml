@@ -8,16 +8,36 @@
     tools:context="com.example.administrator.jrouter.MainActivity">
 
     <TextView
-        android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
     <Button
         android:id="@+id/bt"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:onClick="Click"
-        android:text="xxx"/>
+        android:text="跳转"/>
+
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="Click"
+        android:text="带参数跳转并自动装载参数"/>
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="Click"
+        android:text="进程间传值"/>
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="Click"
+        android:text="获取其他地方注册的服务并调用"/>
 
 </LinearLayout>
