@@ -1,4 +1,4 @@
-package com.example.routersever.dispatcher.intent;
+package com.example.routersever.dispatcher;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.example.routersever.controller.ui.UiFactoryImpl;
 import com.example.routersever.constant.Constants;
-import com.example.routersever.dispatcher.intent.IDispacher.IDispacherIntent;
+import com.example.routersever.dispatcher.IDispacher.IDispacherIntent;
 import com.example.routersever.message.RouterOpenRequst;
 import com.example.routersever.message.RouterOpenResponse;
 

@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.routersever.constant.Constants;
-import com.example.routersever.dispatcher.intent.DispacherFactoryImpl;
+import com.example.routersever.dispatcher.DispacherFactoryImpl;
 import com.example.routersever.sever.ISever.ISeverUi;
 import com.example.routersever.util.ExceptionUtil;
 

@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity">
+        <activity android:name=".TestActivity"
+            android:process=":test">
 
         </activity>
 

@@ -20,6 +20,11 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/aidl']
+        }
+    }
 }
 
 dependencies {
@@ -29,4 +34,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api project(':JRouter-Annotation')
+    implementation 'com.google.code.gson:gson:2.8.2'
 }

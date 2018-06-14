@@ -13,11 +13,11 @@ import com.example.routersever.sever.JRouterSever;
 public class A_AppLication implements IApplicationRouter {
     @Override
     public void onCreate(Context context) {
-        JRouterSever.getFactory().getFunctions().RegisterFunction(Module_A_Interface.class,new TestUtil());
+        JRouterSever.getSever().getFunctions().RegisterFunction(Module_A_Interface.class,new TestUtil());
     }
 
     @Override
     public void onDestory() {
-        JRouterSever.getFactory().getFunctions().unRegisterFunction(Module_A_Interface.class);
+        JRouterSever.getSever().getFunctions().unRegisterFunction(Module_A_Interface.class);
     }
 }

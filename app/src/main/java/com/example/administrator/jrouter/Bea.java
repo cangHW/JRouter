@@ -5,4 +5,13 @@ package com.example.administrator.jrouter;
  */
 
 public class Bea {
+
+    String name="asd";
+    int old=6;
+    int sex=1;
+
+    @Override
+    public String toString() {
+        return "name:"+name+" old:"+old+" sex:"+sex;
+    }
 }

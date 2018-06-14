@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.routersever.controller.context.IContextFactory.IContextFactory;
+import com.example.routersever.controller.cache.ICacheFactory.ICacheFactory;
 import com.example.routersever.util.ExceptionUtil;
-import com.example.routersever.controller.context.ContextFactoryImpl;
+import com.example.routersever.controller.cache.CacheFactoryImpl;
 
 /**
  * Created by Canghaixiao.
@@ -26,8 +26,8 @@ public class JRouter {
      */
     public static void init(@NonNull Context context) {
         if (context instanceof Application) {
-            IContextFactory factory = new ContextFactoryImpl();
-            factory.getContextCache().put(context);
+            ICacheFactory factory = new CacheFactoryImpl();
+            factory.getContext().put(context);
             isReady = true;
         } else {
             ExceptionUtil.ClassCast("Are you sure this context is Application ?");

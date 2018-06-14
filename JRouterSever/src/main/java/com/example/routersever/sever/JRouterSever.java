@@ -3,6 +3,7 @@ package com.example.routersever.sever;
 import com.example.routersever.JRouter;
 import com.example.routersever.sever.ISever.ISeverAdress;
 import com.example.routersever.sever.ISever.ISeverAutowired;
+import com.example.routersever.sever.ISever.ISeverData;
 import com.example.routersever.sever.ISever.ISeverFunction;
 import com.example.routersever.sever.ISever.ISeverUi;
 import com.example.routersever.sever.ISeverFactory.ISeverFactory;
@@ -25,7 +26,7 @@ public class JRouterSever implements ISeverFactory {
         private static JRouterSever mInstance = new JRouterSever();
     }
 
-    public static ISeverFactory getFactory() {
+    public static ISeverFactory getSever() {
         return Factory.mInstance;
     }
 
@@ -47,6 +48,11 @@ public class JRouterSever implements ISeverFactory {
     @Override
     public ISeverAdress getIps() {
         return SeverAdressImpl.getInstance();
+    }
+
+    @Override
+    public ISeverData getDatas() {
+        return SeverDataImpl.getInstance();
     }
 
 }

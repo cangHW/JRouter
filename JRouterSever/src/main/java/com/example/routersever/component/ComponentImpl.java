@@ -3,8 +3,8 @@ package com.example.routersever.component;
 import android.support.annotation.NonNull;
 
 import com.example.routersever.component.IComponent.IComponent;
-import com.example.routersever.controller.context.ContextFactoryImpl;
-import com.example.routersever.controller.context.IContextFactory.IContextFactory;
+import com.example.routersever.controller.cache.CacheFactoryImpl;
+import com.example.routersever.controller.cache.ICacheFactory.ICacheFactory;
 import com.example.routersever.interfaces.IApplicationRouter;
 import com.example.routersever.util.ExceptionUtil;
 
@@ -17,11 +17,11 @@ import java.util.HashMap;
  */
 class ComponentImpl implements IComponent {
 
-    private IContextFactory mFactory;
+    private ICacheFactory mFactory;
     private HashMap<String, IApplicationRouter> mComponentsWapper = new HashMap<>();
 
     private ComponentImpl() {
-        mFactory = new ContextFactoryImpl();
+        mFactory = new CacheFactoryImpl();
     }
 
     private static class Factory {
@@ -40,7 +40,7 @@ class ComponentImpl implements IComponent {
         try {
             Class aClass = Class.forName(componentName);
             IApplicationRouter iApplication = (IApplicationRouter) aClass.newInstance();
-            iApplication.onCreate(mFactory.getContextCache().get());
+            iApplication.onCreate(mFactory.getContext().get());
             mComponentsWapper.put(componentName, iApplication);
             return;
         } catch (ClassNotFoundException e) {

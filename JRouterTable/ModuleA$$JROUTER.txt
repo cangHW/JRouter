@@ -1,4 +1,4 @@
-          JRouterTable
+  JRouterTable
 
   ModuleName : ModuleA
 

@@ -23,7 +23,7 @@ public class A_Activity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a);
-        JRouterSever.getFactory().getAutowireds().autowired(this);
+        JRouterSever.getSever().getAutowireds().autowired(this);
 //        String name=getIntent().getStringExtra("name");
         Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
     }

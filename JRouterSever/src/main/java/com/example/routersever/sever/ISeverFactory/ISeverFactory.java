@@ -2,6 +2,7 @@ package com.example.routersever.sever.ISeverFactory;
 
 import com.example.routersever.sever.ISever.ISeverAdress;
 import com.example.routersever.sever.ISever.ISeverAutowired;
+import com.example.routersever.sever.ISever.ISeverData;
 import com.example.routersever.sever.ISever.ISeverFunction;
 import com.example.routersever.sever.ISever.ISeverUi;
 
@@ -31,4 +32,9 @@ public interface ISeverFactory {
      * 获取目标IP地址
      */
     ISeverAdress getIps();
+
+    /**
+     * 获取数据管理服务（支持跨进程）
+     */
+    ISeverData getDatas();
 }

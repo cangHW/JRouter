@@ -1,7 +1,8 @@
-package com.example.routersever.dispatcher.intent;
+package com.example.routersever.dispatcher;
 
-import com.example.routersever.dispatcher.intent.IDispacher.IDispacherIntent;
-import com.example.routersever.dispatcher.intent.IDispacherFactory.IDispacherFactory;
+import com.example.routersever.dispatcher.IDispacher.IDispacherData;
+import com.example.routersever.dispatcher.IDispacher.IDispacherIntent;
+import com.example.routersever.dispatcher.IDispacherFactory.IDispacherFactory;
 
 /**
  * Created by Canghaixiao.
@@ -25,5 +26,10 @@ public class DispacherFactoryImpl implements IDispacherFactory {
     @Override
     public IDispacherIntent getDispacheIntent() {
         return DispacherIntentImpl.getInstance();
+    }
+
+    @Override
+    public IDispacherData getDispacheData() {
+        return DispacherDataImpl.getInstance();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.routersever.dispatcher.intent.IDispacher;
+package com.example.routersever.dispatcher.IDispacher;
 
 import android.content.Context;
 import android.os.Bundle;
