@@ -40,4 +40,11 @@
         android:onClick="Click"
         android:text="获取其他地方注册的服务并调用"/>
 
+    <Button
+        android:id="@+id/bt4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="Click"
+        android:text="仿eventbu观察者"/>
+
 </LinearLayout>

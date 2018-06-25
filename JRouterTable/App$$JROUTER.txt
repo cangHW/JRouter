@@ -12,6 +12,11 @@
   Group : app
   Path : /asd1
 
+  PackageName : com.example.administrator.jrouter.EventBusActivity
+  ClassName : EventBusActivity
+  Group : other
+  Path : /event
+
   PackageName : com.example.administrator.jrouter.ServiceActivity
   ClassName : ServiceActivity
   Group : other

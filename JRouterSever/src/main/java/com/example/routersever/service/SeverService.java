@@ -92,6 +92,11 @@ public class SeverService extends Service {
             mCallbackList.finishBroadcast();
             return new DataAIDLMessage();
         }
+
+        @Override
+        public void notifyAll(String message, String type, int pid) throws RemoteException {
+
+        }
     };
 
 }

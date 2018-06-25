@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.routersever.component.JRouterComponent;
+import com.example.routersever.controller.eventbus.EventBusFactory;
 import com.example.routersever.sever.JRouterSever;
 import com.jrouter.annotation.RouterNode;
 
@@ -49,9 +50,17 @@ public class MainActivity extends AppCompatActivity {
                 String ip3 = JRouterSever.getSever().getIps().getIp("App", "ServiceActivity");
                 JRouterSever.getSever().getUIs().openUI(this, ip3);
                 break;
+            case R.id.bt4:
+                JRouterSever.getSever().getEventBus().register(this);
+                String ip4 = JRouterSever.getSever().getIps().getIp("App", "EventBusActivity");
+                JRouterSever.getSever().getUIs().openUI(this, ip4);
+                break;
         }
     }
 
+    public void onEventThreadMain(String ss){
+        Toast.makeText(MainActivity.this,ss,Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

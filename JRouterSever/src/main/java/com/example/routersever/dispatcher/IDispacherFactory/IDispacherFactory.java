@@ -1,6 +1,7 @@
 package com.example.routersever.dispatcher.IDispacherFactory;
 
 import com.example.routersever.dispatcher.IDispacher.IDispacherData;
+import com.example.routersever.dispatcher.IDispacher.IDispacherEvent;
 import com.example.routersever.dispatcher.IDispacher.IDispacherIntent;
 
 /**
@@ -13,4 +14,6 @@ public interface IDispacherFactory {
     IDispacherIntent getDispacheIntent();
 
     IDispacherData getDispacheData();
+
+    IDispacherEvent getDispacherEvent();
 }

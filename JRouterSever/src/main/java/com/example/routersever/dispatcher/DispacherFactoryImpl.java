@@ -1,6 +1,7 @@
 package com.example.routersever.dispatcher;
 
 import com.example.routersever.dispatcher.IDispacher.IDispacherData;
+import com.example.routersever.dispatcher.IDispacher.IDispacherEvent;
 import com.example.routersever.dispatcher.IDispacher.IDispacherIntent;
 import com.example.routersever.dispatcher.IDispacherFactory.IDispacherFactory;
 
@@ -10,7 +11,6 @@ import com.example.routersever.dispatcher.IDispacherFactory.IDispacherFactory;
  * Function :获取UI跳转事件分发处理服务
  */
 public class DispacherFactoryImpl implements IDispacherFactory {
-
 
     private DispacherFactoryImpl() {
     }
@@ -31,5 +31,10 @@ public class DispacherFactoryImpl implements IDispacherFactory {
     @Override
     public IDispacherData getDispacheData() {
         return DispacherDataImpl.getInstance();
+    }
+
+    @Override
+    public IDispacherEvent getDispacherEvent() {
+        return DispacherEventImpl.getInstance();
     }
 }
