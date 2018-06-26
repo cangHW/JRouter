@@ -2,9 +2,12 @@ package com.example.routersever.sever;
 
 import android.support.annotation.NonNull;
 
+import com.example.routersever.controller.cache.CacheFactoryImpl;
 import com.example.routersever.controller.eventbus.EventBusFactory;
 import com.example.routersever.controller.eventbus.IEventBus.IEventBus;
+import com.example.routersever.dispatcher.DispacherFactoryImpl;
 import com.example.routersever.sever.ISever.ISeverEventBus;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -29,6 +32,7 @@ public class SeverEventBusImpl implements ISeverEventBus {
 
     @Override
     public void register(@NonNull Object o) {
+        DispacherFactoryImpl.getFactory().getDispacherEvent().init();
         EventBusFactory.getFactory().getEventBus().register(o);
     }
 
@@ -38,19 +42,10 @@ public class SeverEventBusImpl implements ISeverEventBus {
     }
 
     @Override
-    public void post(@NonNull Object o) {
-        List<Object> list = EventBusFactory.getFactory().getEventBus().getObject(IEventBus.METHOD_MAIN, o.getClass().getName());
-        if (list != null && !list.isEmpty()) {
-            for (Object object : list) {
-                try {
-                    Class<?> aClass = object.getClass();
-                    Method method = aClass.getDeclaredMethod(IEventBus.METHOD_MAIN, o.getClass());
-                    method.setAccessible(true);
-                    method.invoke(object, o);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public <T> void post(@NonNull T t) {
+        Gson gson= CacheFactoryImpl.getFactory().getCache().getGson();
+        String message=gson.toJson(t);
+        String type=t.getClass().getName();
+        DispacherFactoryImpl.getFactory().getDispacherEvent().post(t,message,type);
     }
 }

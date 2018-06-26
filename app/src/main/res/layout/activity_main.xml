@@ -45,6 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="Click"
-        android:text="仿eventbu观察者"/>
+        android:text="仿eventbus,可以跨进程的观察者"/>
 
 </LinearLayout>

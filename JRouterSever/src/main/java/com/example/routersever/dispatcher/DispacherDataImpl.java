@@ -1,22 +1,16 @@
 package com.example.routersever.dispatcher;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.os.RemoteException;
 
 import com.example.routersever.DataAIDLInterface;
 import com.example.routersever.DataAIDLMessage;
 import com.example.routersever.IMessageInterface;
-import com.example.routersever.constant.Constants;
 import com.example.routersever.controller.cache.CacheFactoryImpl;
 import com.example.routersever.controller.data.DataFactoryImpl;
 import com.example.routersever.controller.data.DataImpl;
 import com.example.routersever.dispatcher.IDispacher.IDispacherData;
 import com.example.routersever.interfaces.ServiceConnectCallback;
-import com.example.routersever.service.SeverService;
+import com.example.routersever.service.SeverConnection;
 import com.google.gson.Gson;
 
 /**
@@ -26,7 +20,7 @@ import com.google.gson.Gson;
  */
 class DispacherDataImpl implements IDispacherData {
 
-    private JRouterServiceConnection mConnection;
+    private ConnectCallback mCallback;
 
     private DispacherDataImpl() {
     }
@@ -53,7 +47,7 @@ class DispacherDataImpl implements IDispacherData {
         }
         try {
             int pid = CacheFactoryImpl.getFactory().getCache().getPid();
-            DataAIDLMessage message = mConnection.getDataAIDLInterface().getMessage(tag, pid);
+            DataAIDLMessage message = SeverConnection.getInstance().getDataAIDLInterface().getMessage(tag, pid);
             if (message.getObject() != null) {
                 if (message.isString() && tClass != String.class) {
                     Gson gson = CacheFactoryImpl.getFactory().getCache().getGson();
@@ -63,7 +57,7 @@ class DispacherDataImpl implements IDispacherData {
                     return tClass.cast(message.getObject());
                 }
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -72,12 +66,12 @@ class DispacherDataImpl implements IDispacherData {
     @Override
     public void onConnect(final ServiceConnectCallback callback) {
         checkConnect();
-        if (mConnection.isConnect()) {
+        if (mCallback.isConnect()){
             callback.onConnect();
-        } else {
-            mConnection.setConnectCallback(new ConnectCallback() {
+        }else {
+            mCallback.setConnect(new ServiceConnectCallback() {
                 @Override
-                public void callback() {
+                public void onConnect() {
                     callback.onConnect();
                 }
             });
@@ -85,55 +79,35 @@ class DispacherDataImpl implements IDispacherData {
     }
 
     private void checkConnect() {
-        if (mConnection == null) {
-            JRouterMessage jRouterMessage = new JRouterMessage();
-            mConnection = new JRouterServiceConnection();
-            mConnection.setJRouterMessage(jRouterMessage);
+        if (mCallback==null){
+            mCallback=new ConnectCallback();
         }
-        if (!mConnection.isConnect()) {
-            Context context = CacheFactoryImpl.getFactory().getContext().get();
-            Intent intent = new Intent(context, SeverService.class);
-            intent.putExtra(SeverService.KEY, SeverService.VALUE);
-            context.startService(intent);
-            context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        }
+        SeverConnection.getInstance().addConnect(mCallback);
     }
 
-    private class JRouterServiceConnection implements ServiceConnection {
+    private class ConnectCallback implements SeverConnection.ConnectCallback{
 
-        private boolean isConnect = false;
-        private JRouterMessage mJRouterMessage;
-        private DataAIDLInterface mDataAIDLInterface;
-        private ConnectCallback mCallback;
+        private boolean isConnect=false;
+        private ServiceConnectCallback mConnect;
 
-        boolean isConnect() {
+        ConnectCallback(){}
+
+        void setConnect(ServiceConnectCallback connect){
+            this.mConnect=connect;
+        }
+
+        boolean isConnect(){
             return isConnect;
         }
 
-        void setJRouterMessage(JRouterMessage jRouterMessage) {
-            this.mJRouterMessage = jRouterMessage;
-        }
-
-        void setConnectCallback(ConnectCallback callback) {
-            this.mCallback = callback;
-        }
-
-        DataAIDLInterface getDataAIDLInterface() {
-            return mDataAIDLInterface;
-        }
-
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
+        public void onServiceConnected(DataAIDLInterface anInterface) {
             try {
-                if (service==null){
-                    return;
-                }
                 int pid = CacheFactoryImpl.getFactory().getCache().getPid();
-                mDataAIDLInterface = DataAIDLInterface.Stub.asInterface(service);
-                mDataAIDLInterface.Register(mJRouterMessage, pid);
-                isConnect = true;
-                if (mCallback != null) {
-                    mCallback.callback();
+                anInterface.Register(new JRouterMessage(),null, pid);
+                isConnect=true;
+                if (mConnect!=null){
+                    mConnect.onConnect();
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -141,19 +115,8 @@ class DispacherDataImpl implements IDispacherData {
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName name) {
-            try {
-                mDataAIDLInterface.unRegister(mJRouterMessage);
-                isConnect = false;
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onBindingDied(ComponentName name) {
-            isConnect = false;
-            checkConnect();
+        public void onServiceDisconnected(DataAIDLInterface anInterface) {
+            isConnect=false;
         }
     }
 
@@ -184,7 +147,4 @@ class DispacherDataImpl implements IDispacherData {
         }
     }
 
-    private interface ConnectCallback {
-        void callback();
-    }
 }

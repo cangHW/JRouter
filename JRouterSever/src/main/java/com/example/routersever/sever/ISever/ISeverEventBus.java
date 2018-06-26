@@ -13,5 +13,5 @@ public interface ISeverEventBus {
 
     void unRegister(@NonNull Object o);
 
-    void post(@NonNull Object o);
+    <T> void post(@NonNull T t);
 }

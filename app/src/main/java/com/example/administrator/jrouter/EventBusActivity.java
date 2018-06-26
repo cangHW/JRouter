@@ -33,7 +33,7 @@ public class EventBusActivity extends Activity {
 
     public void Click(View view){
         String message=et.getText().toString().trim();
-        JRouterSever.getSever().getEventBus().post(message);
+        JRouterSever.getSever().getEventBus().post(new Bean(message,10,10));
         finish();
     }
 }

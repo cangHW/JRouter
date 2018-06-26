@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".ServiceActivity"/>
 
-        <activity android:name=".EventBusActivity"/>
+        <activity android:name=".EventBusActivity"
+            android:process=":event"/>
     </application>
 
 </manifest>

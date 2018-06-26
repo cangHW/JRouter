@@ -7,6 +7,8 @@ package com.example.routersever.dispatcher.IDispacher;
  */
 public interface IDispacherEvent {
 
-    void post(Object o);
+    void init();
+
+    void post(Object o,String message,String type);
 
 }

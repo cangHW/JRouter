@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.IInterface;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.util.Log;
 
 import com.example.routersever.DataAIDLInterface;
 import com.example.routersever.DataAIDLMessage;
+import com.example.routersever.IEventInterface;
 import com.example.routersever.IMessageInterface;
 import com.example.routersever.constant.Constants;
 
@@ -20,10 +22,15 @@ import com.example.routersever.constant.Constants;
  * Function :
  */
 public class SeverService extends Service {
-    public static final String KEY="JRouter";
-    public static final String VALUE="true";
+    public static final String KEY = "JRouter";
+    public static final String VALUE = "true";
 
-    private RemoteCallbackList<IMessageInterface> mCallbackList=new RemoteCallbackList<>();
+    private class Cooki {
+        int pid;
+        String type;
+    }
+
+    private RemoteCallbackList<IInterface> mCallbackList = new RemoteCallbackList<>();
 
     @Override
     public void onCreate() {
@@ -41,7 +48,7 @@ public class SeverService extends Service {
         if (VALUE.equals(intent.getStringExtra(KEY))) {
             return mStub;
         }
-        Log.d(Constants.TAG,"the user message is error");
+        Log.d(Constants.TAG, "the user message is error");
         return null;
     }
 
@@ -61,30 +68,42 @@ public class SeverService extends Service {
         super.onDestroy();
     }
 
-    private DataAIDLInterface.Stub mStub=new DataAIDLInterface.Stub() {
+    private DataAIDLInterface.Stub mStub = new DataAIDLInterface.Stub() {
         @Override
-        public void Register(IMessageInterface inter,int pid) throws RemoteException {
-            mCallbackList.register(inter,pid);
+        public void Register(IMessageInterface inter, IEventInterface event, int pid) throws RemoteException {
+            Cooki cooki = new Cooki();
+            cooki.pid = pid;
+            if (inter != null) {
+                cooki.type = "1";
+                mCallbackList.register(inter, cooki);
+            } else {
+                cooki.type = "2";
+                mCallbackList.register(event, cooki);
+            }
         }
 
         @Override
-        public void unRegister(IMessageInterface inter) throws RemoteException {
-            mCallbackList.unregister(inter);
+        public void unRegister(IMessageInterface inter, IEventInterface event) throws RemoteException {
+            if (inter != null) {
+                mCallbackList.unregister(inter);
+            } else {
+                mCallbackList.unregister(event);
+            }
         }
 
         @Override
         public DataAIDLMessage getMessage(String messageTag, int pid) throws RemoteException {
-            int len=mCallbackList.beginBroadcast();
-            for (int i=0;i<len;i++){
-                int p= (int) mCallbackList.getBroadcastCookie(i);
-                if (p!=pid) {
+            int len = mCallbackList.beginBroadcast();
+            for (int i = 0; i < len; i++) {
+                Cooki cooki = (Cooki) mCallbackList.getBroadcastCookie(i);
+                if (cooki.pid != pid && cooki.type.equals("1")) {
                     try {
-                        DataAIDLMessage message = mCallbackList.getBroadcastItem(i).getMessage(messageTag, p);
-                        if (message.getObject()!=null){
+                        DataAIDLMessage message = ((IMessageInterface) mCallbackList.getBroadcastItem(i)).getMessage(messageTag, cooki.pid);
+                        if (message.getObject() != null) {
                             mCallbackList.finishBroadcast();
                             return message;
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -95,7 +114,14 @@ public class SeverService extends Service {
 
         @Override
         public void notifyAll(String message, String type, int pid) throws RemoteException {
-
+            int len = mCallbackList.beginBroadcast();
+            for (int i = 0; i < len; i++) {
+                Cooki cooki = (Cooki) mCallbackList.getBroadcastCookie(i);
+                if (cooki.pid != pid && cooki.type.equals("2")) {
+                    ((IEventInterface) mCallbackList.getBroadcastItem(i)).notifyAll(message, type, pid);
+                }
+            }
+            mCallbackList.finishBroadcast();
         }
     };
 
