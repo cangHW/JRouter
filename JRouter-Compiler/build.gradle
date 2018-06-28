@@ -1,5 +1,5 @@
 apply plugin: 'java'
-applyplugin:'com.github.dcendents.android-maven'
+apply plugin:'com.github.dcendents.android-maven'
 group='com.github.cangHW'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
