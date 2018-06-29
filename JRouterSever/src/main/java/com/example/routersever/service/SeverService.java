@@ -71,6 +71,22 @@ public class SeverService extends Service {
     private DataAIDLInterface.Stub mStub = new DataAIDLInterface.Stub() {
         @Override
         public void Register(IMessageInterface inter, IEventInterface event, int pid) throws RemoteException {
+
+            int len = mCallbackList.beginBroadcast();
+            for (int i = 0; i < len; i++) {
+                Cooki cooki = (Cooki) mCallbackList.getBroadcastCookie(i);
+                if (cooki.pid == pid) {
+                    if (inter!=null&&cooki.type.equals("1")){
+                        mCallbackList.finishBroadcast();
+                        return;
+                    }else if (event!=null&&cooki.type.equals("2")){
+                        mCallbackList.finishBroadcast();
+                        return;
+                    }
+                }
+            }
+            mCallbackList.finishBroadcast();
+
             Cooki cooki = new Cooki();
             cooki.pid = pid;
             if (inter != null) {

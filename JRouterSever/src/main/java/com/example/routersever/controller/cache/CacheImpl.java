@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 public class CacheImpl implements ICache {
 
     private volatile WeakReference<Gson> mGsonWeakReference;
-    private volatile WeakReference<Integer> mIntegerWeakReference;
+    private volatile WeakReference<Integer> mPidWeakReference;
 
     private CacheImpl() {
     }
@@ -39,10 +39,10 @@ public class CacheImpl implements ICache {
 
     @Override
     public int getPid() {
-        if (mIntegerWeakReference == null || mIntegerWeakReference.get() == null) {
+        if (mPidWeakReference == null || mPidWeakReference.get() == null) {
             int pid=Process.myPid();
-            mIntegerWeakReference = new WeakReference<>(pid);
+            mPidWeakReference = new WeakReference<>(pid);
         }
-        return mIntegerWeakReference.get();
+        return mPidWeakReference.get();
     }
 }

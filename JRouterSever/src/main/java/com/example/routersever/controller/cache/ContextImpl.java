@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
  */
 class ContextImpl implements IContext {
 
-    private volatile WeakReference<Context> mWeakReference;
+    private volatile WeakReference<Context> mContextWeakReference;
 
     private ContextImpl() {
     }
@@ -28,15 +28,15 @@ class ContextImpl implements IContext {
 
     @Override
     public void put(Context context) {
-        if (mWeakReference == null) {
-            mWeakReference = new WeakReference<>(context);
+        if (mContextWeakReference == null||mContextWeakReference.get()==null) {
+            mContextWeakReference = new WeakReference<>(context);
         }
     }
 
     @Override
     public Context get() {
-        if (mWeakReference != null) {
-            return mWeakReference.get();
+        if (mContextWeakReference != null) {
+            return mContextWeakReference.get();
         }
         return null;
     }

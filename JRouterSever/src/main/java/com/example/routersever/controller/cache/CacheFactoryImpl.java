@@ -11,6 +11,8 @@ import com.example.routersever.controller.cache.ICache.ICache;
  */
 public class CacheFactoryImpl implements ICacheFactory {
 
+    private CacheFactoryImpl(){}
+
     private static class Factory {
         private static CacheFactoryImpl mInstance = new CacheFactoryImpl();
     }

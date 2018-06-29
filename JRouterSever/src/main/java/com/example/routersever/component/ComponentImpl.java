@@ -17,11 +17,9 @@ import java.util.HashMap;
  */
 class ComponentImpl implements IComponent {
 
-    private ICacheFactory mFactory;
     private HashMap<String, IApplicationRouter> mComponentsWapper = new HashMap<>();
 
     private ComponentImpl() {
-        mFactory = new CacheFactoryImpl();
     }
 
     private static class Factory {
@@ -40,7 +38,7 @@ class ComponentImpl implements IComponent {
         try {
             Class aClass = Class.forName(componentName);
             IApplicationRouter iApplication = (IApplicationRouter) aClass.newInstance();
-            iApplication.onCreate(mFactory.getContext().get());
+            iApplication.onCreate(CacheFactoryImpl.getFactory().getContext().get());
             mComponentsWapper.put(componentName, iApplication);
             return;
         } catch (ClassNotFoundException e) {

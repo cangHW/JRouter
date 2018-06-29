@@ -50,6 +50,9 @@ public class SeverConnection implements ServiceConnection {
 
     public void addConnect(ConnectCallback callback){
         try {
+            if (mDataAIDLInterface!=null){
+                callback.onServiceConnected(mDataAIDLInterface);
+            }
             mConnectCallbacks.add(callback);
         }catch (Exception e){
             e.printStackTrace();

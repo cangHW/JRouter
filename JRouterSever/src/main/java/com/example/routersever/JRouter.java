@@ -26,8 +26,7 @@ public class JRouter {
      */
     public static void init(@NonNull Context context) {
         if (context instanceof Application) {
-            ICacheFactory factory = new CacheFactoryImpl();
-            factory.getContext().put(context);
+            CacheFactoryImpl.getFactory().getContext().put(context);
             isReady = true;
         } else {
             ExceptionUtil.ClassCast("Are you sure this context is Application ?");
