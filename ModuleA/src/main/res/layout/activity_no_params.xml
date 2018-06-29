@@ -8,6 +8,10 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="20sp"
-        android:text="hi，我没有参数,并且我的IP地址和有参数那家伙一样"/>
+        android:focusable="true"
+        android:clickable="true"
+        android:padding="5dp"
+        android:onClick="Click"
+        android:text="hi，我没有参数,并且我的IP地址和有参数那家伙一样，点击我返回"/>
 
 </LinearLayout>

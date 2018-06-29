@@ -1,2 +1,3 @@
 include ':app', ':JRouterSever', ':ModuleA', ':ModuleLib', ':JRouter-Annotation', ':JRouter-Compiler'
+//include ':JRouterSever', ':JRouter-Annotation', ':JRouter-Compiler'
 
