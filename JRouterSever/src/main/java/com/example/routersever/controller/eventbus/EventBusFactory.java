@@ -14,7 +14,7 @@ public class EventBusFactory implements IEventBusFactory {
     }
 
     private static class Factory {
-        private static EventBusFactory mInstance = new EventBusFactory();
+        private static final EventBusFactory mInstance = new EventBusFactory();
     }
 
     public static IEventBusFactory getFactory() {

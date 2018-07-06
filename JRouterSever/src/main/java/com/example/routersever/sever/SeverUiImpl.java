@@ -26,7 +26,7 @@ class SeverUiImpl implements ISeverUi {
     }
 
     private static class Factory {
-        private static SeverUiImpl mInstance = new SeverUiImpl();
+        private static final SeverUiImpl mInstance = new SeverUiImpl();
     }
 
     public static ISeverUi getInstance() {

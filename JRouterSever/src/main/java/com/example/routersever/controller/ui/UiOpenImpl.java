@@ -26,9 +26,10 @@ import java.util.List;
  */
 class UiOpenImpl implements IUiOpen {
 
-    private HashMap<String, SoftReference<IUiCache>> mUiWapper = new HashMap<>();
+    private HashMap<String, SoftReference<IUiCache>> mUiWapper;
 
     private UiOpenImpl() {
+        mUiWapper = new HashMap<>();
     }
 
     private static class Factory {

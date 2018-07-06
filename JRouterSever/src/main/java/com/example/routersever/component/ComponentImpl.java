@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.example.routersever.component.IComponent.IComponent;
 import com.example.routersever.controller.cache.CacheFactoryImpl;
-import com.example.routersever.controller.cache.ICacheFactory.ICacheFactory;
-import com.example.routersever.interfaces.IApplicationRouter;
+import com.example.routersever.interfaces.IRouterApplication;
 import com.example.routersever.util.ExceptionUtil;
 
 import java.util.HashMap;
@@ -17,13 +16,13 @@ import java.util.HashMap;
  */
 class ComponentImpl implements IComponent {
 
-    private HashMap<String, IApplicationRouter> mComponentsWapper = new HashMap<>();
+    private HashMap<String, IRouterApplication> mComponentsWapper = new HashMap<>();
 
     private ComponentImpl() {
     }
 
     private static class Factory {
-        private static ComponentImpl mInstance = new ComponentImpl();
+        private static final ComponentImpl mInstance = new ComponentImpl();
     }
 
     public static IComponent getInstance() {
@@ -37,7 +36,12 @@ class ComponentImpl implements IComponent {
         }
         try {
             Class aClass = Class.forName(componentName);
-            IApplicationRouter iApplication = (IApplicationRouter) aClass.newInstance();
+            Object o=aClass.newInstance();
+            //TODO 检查是否实现了IRouterApplication接口
+//            if (o instanceof IRouterApplication){
+//
+//            }
+            IRouterApplication iApplication = (IRouterApplication) o;
             iApplication.onCreate(CacheFactoryImpl.getFactory().getContext().get());
             mComponentsWapper.put(componentName, iApplication);
             return;
@@ -54,7 +58,7 @@ class ComponentImpl implements IComponent {
     @Override
     public void unRegisterComponent(@NonNull String componentName) {
         if (mComponentsWapper.containsKey(componentName)) {
-            IApplicationRouter iApplication = mComponentsWapper.get(componentName);
+            IRouterApplication iApplication = mComponentsWapper.get(componentName);
             iApplication.onDestory();
             mComponentsWapper.remove(componentName);
         } else {

@@ -16,13 +16,14 @@ import java.util.HashMap;
  */
 class FunctionImpl implements IFunction {
 
-    private HashMap<String, Object> mSeverWapper = new HashMap<>();
+    private HashMap<String, Object> mSeverWapper;
 
     private FunctionImpl() {
+        mSeverWapper = new HashMap<>();
     }
 
     private static class Factory {
-        private static FunctionImpl mInstance = new FunctionImpl();
+        private static final FunctionImpl mInstance = new FunctionImpl();
     }
 
     public static IFunction getInstance() {

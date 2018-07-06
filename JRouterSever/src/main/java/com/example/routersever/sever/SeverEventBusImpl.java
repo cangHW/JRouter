@@ -23,7 +23,7 @@ public class SeverEventBusImpl implements ISeverEventBus {
     }
 
     private static class Factory {
-        private static SeverEventBusImpl mInstance = new SeverEventBusImpl();
+        private static final SeverEventBusImpl mInstance = new SeverEventBusImpl();
     }
 
     public static ISeverEventBus getInstance() {

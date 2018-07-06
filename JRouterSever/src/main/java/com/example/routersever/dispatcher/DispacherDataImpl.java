@@ -26,7 +26,7 @@ class DispacherDataImpl implements IDispacherData {
     }
 
     private static class Factory {
-        private static DispacherDataImpl mInstance = new DispacherDataImpl();
+        private static final DispacherDataImpl mInstance = new DispacherDataImpl();
     }
 
     public static IDispacherData getInstance() {

@@ -17,7 +17,7 @@ public class DataImpl implements IData {
     }
 
     private static class Factory {
-        private static DataImpl mInstance = new DataImpl();
+        private static final DataImpl mInstance = new DataImpl();
     }
 
     public static IData getInstance() {

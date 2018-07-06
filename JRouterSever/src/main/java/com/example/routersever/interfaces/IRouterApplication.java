@@ -7,7 +7,7 @@ import android.content.Context;
  * Time : 2018/6/2 10:30.
  * Function :组件入口，类似于组件的application
  */
-public interface IApplicationRouter {
+public interface IRouterApplication {
 
     /**
      * 开始注册组件

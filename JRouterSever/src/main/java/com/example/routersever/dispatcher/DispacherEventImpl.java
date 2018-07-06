@@ -14,7 +14,7 @@ import com.example.routersever.interfaces.ServiceConnectCallback;
 import com.example.routersever.service.SeverConnection;
 import com.google.gson.Gson;
 
-import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -33,7 +33,7 @@ class DispacherEventImpl implements IDispacherEvent {
     }
 
     private static class Factory {
-        private static DispacherEventImpl mInstance = new DispacherEventImpl();
+        private static final DispacherEventImpl mInstance = new DispacherEventImpl();
     }
 
     public static IDispacherEvent getInstance() {
@@ -116,10 +116,10 @@ class DispacherEventImpl implements IDispacherEvent {
 
     private class Event extends IEventInterface.Stub {
 
-        SoftReference<DispacherEventImpl> reference;
+        private WeakReference<DispacherEventImpl> reference;
 
         Event(DispacherEventImpl dispacherEvent){
-            reference=new SoftReference<>(dispacherEvent);
+            reference=new WeakReference<>(dispacherEvent);
         }
 
         @Override

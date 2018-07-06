@@ -21,7 +21,7 @@ class SeverFunctionImpl implements ISeverFunction {
     }
 
     private static class Factory {
-        private static SeverFunctionImpl mInstance = new SeverFunctionImpl();
+        private static final SeverFunctionImpl mInstance = new SeverFunctionImpl();
     }
 
     public static ISeverFunction getInstance() {

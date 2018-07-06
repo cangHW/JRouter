@@ -14,7 +14,7 @@ public class DataFactoryImpl implements IDataFactory {
     }
 
     private static class Factory {
-        private static DataFactoryImpl mInstance = new DataFactoryImpl();
+        private static final DataFactoryImpl mInstance = new DataFactoryImpl();
     }
 
     public static IDataFactory getFactory() {

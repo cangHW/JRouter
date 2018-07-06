@@ -14,7 +14,7 @@ public class CacheFactoryImpl implements ICacheFactory {
     private CacheFactoryImpl(){}
 
     private static class Factory {
-        private static CacheFactoryImpl mInstance = new CacheFactoryImpl();
+        private static final CacheFactoryImpl mInstance = new CacheFactoryImpl();
     }
 
     public static ICacheFactory getFactory() {

@@ -14,7 +14,7 @@ public class FunctionFactoryImpl implements IFunctionFactory {
     }
 
     private static class Factory {
-        private static FunctionFactoryImpl mInstance = new FunctionFactoryImpl();
+        private static final FunctionFactoryImpl mInstance = new FunctionFactoryImpl();
     }
 
     public static IFunctionFactory getInstance() {

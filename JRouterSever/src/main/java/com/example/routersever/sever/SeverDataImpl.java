@@ -22,7 +22,7 @@ public class SeverDataImpl implements ISeverData {
     }
 
     private static class Factory {
-        private static SeverDataImpl mInstance = new SeverDataImpl();
+        private static final SeverDataImpl mInstance = new SeverDataImpl();
     }
 
     public static ISeverData getInstance() {

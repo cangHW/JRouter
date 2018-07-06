@@ -41,7 +41,7 @@ public class SeverConnection implements ServiceConnection {
     }
 
     private static class Factory {
-        private static SeverConnection mInstance = new SeverConnection();
+        private static final SeverConnection mInstance = new SeverConnection();
     }
 
     public static SeverConnection getInstance() {

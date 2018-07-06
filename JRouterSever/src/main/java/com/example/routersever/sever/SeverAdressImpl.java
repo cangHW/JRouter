@@ -16,7 +16,7 @@ public class SeverAdressImpl implements ISeverAdress {
     }
 
     private static class Factory {
-        private static SeverAdressImpl mInstance = new SeverAdressImpl();
+        private static final SeverAdressImpl mInstance = new SeverAdressImpl();
     }
 
     public static ISeverAdress getInstance() {

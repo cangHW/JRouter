@@ -19,7 +19,7 @@ class ContextImpl implements IContext {
     }
 
     private static class Factory {
-        private static ContextImpl mInstance = new ContextImpl();
+        private static final ContextImpl mInstance = new ContextImpl();
     }
 
     public static IContext getInstance() {

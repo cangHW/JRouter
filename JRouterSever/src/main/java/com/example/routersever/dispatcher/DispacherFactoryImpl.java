@@ -16,7 +16,7 @@ public class DispacherFactoryImpl implements IDispacherFactory {
     }
 
     private static class Factory {
-        private static DispacherFactoryImpl mInstance = new DispacherFactoryImpl();
+        private static final DispacherFactoryImpl mInstance = new DispacherFactoryImpl();
     }
 
     public static IDispacherFactory getFactory() {

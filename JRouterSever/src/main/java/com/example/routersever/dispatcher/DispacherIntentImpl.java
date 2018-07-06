@@ -24,7 +24,7 @@ class DispacherIntentImpl implements IDispacherIntent {
     }
 
     private static class Factory {
-        private static DispacherIntentImpl mInstance = new DispacherIntentImpl();
+        private static final DispacherIntentImpl mInstance = new DispacherIntentImpl();
     }
 
     public static IDispacherIntent getInstance() {

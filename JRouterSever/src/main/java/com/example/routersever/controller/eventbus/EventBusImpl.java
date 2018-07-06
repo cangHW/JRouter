@@ -25,7 +25,7 @@ class EventBusImpl implements IEventBus{
     }
 
     private static class Factory {
-        private static EventBusImpl mInstance = new EventBusImpl();
+        private static final EventBusImpl mInstance = new EventBusImpl();
     }
 
     public static IEventBus getInstance() {

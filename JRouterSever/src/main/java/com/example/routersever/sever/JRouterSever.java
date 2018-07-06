@@ -24,7 +24,7 @@ public class JRouterSever implements ISeverFactory {
     }
 
     private static class Factory {
-        private static JRouterSever mInstance = new JRouterSever();
+        private static final JRouterSever mInstance = new JRouterSever();
     }
 
     public static ISeverFactory getSever() {

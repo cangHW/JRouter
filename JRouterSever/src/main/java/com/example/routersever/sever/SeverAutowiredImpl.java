@@ -19,7 +19,7 @@ public class SeverAutowiredImpl implements ISeverAutowired{
     }
 
     private static class Factory {
-        private static SeverAutowiredImpl mInstance = new SeverAutowiredImpl();
+        private static final SeverAutowiredImpl mInstance = new SeverAutowiredImpl();
     }
 
     public static ISeverAutowired getInstance() {

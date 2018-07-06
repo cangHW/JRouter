@@ -19,7 +19,7 @@ public class JRouterComponent implements IComponentFactory {
     }
 
     private static class Factory {
-        private static JRouterComponent mInstance = new JRouterComponent();
+        private static final JRouterComponent mInstance = new JRouterComponent();
     }
 
     public static IComponentFactory getFactory() {
